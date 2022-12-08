@@ -8,19 +8,31 @@ class Boomerang {
     this.position = 0;
   }
 
-  fly() {
-    this.moveRight();
-    this.moveLeft();
+  async fly(num) {
+    this.moveRight(num);
+    setTimeout(() => {
+      this.moveLeft(num);
+    }, num * 100);
   }
 
-  moveLeft() {
-    // Идём влево.
-    this.position -= 1;
-  }
-
-  moveRight() {
+  moveRight(num) {
     // Идём вправо.
-    this.position += 1;
+    let i = 0;
+    const myTimer = setInterval(async () => {
+      if (i === num) clearInterval(myTimer);
+      this.position += 1;
+      i += 1;
+    }, 100);
+  }
+
+  moveLeft(num) {
+    // Идём влево.
+    let i = 0;
+    const myTimer = setInterval(async () => {
+      if (i === num) clearInterval(myTimer);
+      this.position -= 1;
+      i += 1;
+    }, 100);
   }
 }
 
