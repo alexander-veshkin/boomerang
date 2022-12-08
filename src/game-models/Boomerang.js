@@ -11,6 +11,7 @@ class Boomerang {
 
   fly(game) {
     this.startPosition = this.position;
+    this.killable = true;
     let direction = 'right';
 
     const myTimer = setInterval(() => {
@@ -27,6 +28,7 @@ class Boomerang {
       }
 
       if (this.position === this.startPosition || this.position === game.hero.position) {
+        this.killable = false;
         clearInterval(myTimer);
       }
     }, 50);
