@@ -10,19 +10,19 @@ class Hero {
   moveLeft() {
     // Идём влево.
     if (this.position === 0) return;
+    if (this.position === this.boomerang.position) this.boomerang.position -= 1;
     this.position -= 1;
-    this.boomerang.position -= 1;
   }
 
   moveRight() {
     // Идём вправо.
+    if (this.position === this.boomerang.position) this.boomerang.position += 1;
     this.position += 1;
-    this.boomerang.position += 1;
   }
 
-  attack() {
+  attack(game) {
     // Атакуем.
-    this.boomerang.fly(10);
+    this.boomerang.fly(game);
   }
 
   die() {

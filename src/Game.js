@@ -13,11 +13,12 @@ const View = require('./View');
 class Game {
   constructor({ trackLength }) {
     this.trackLength = trackLength;
-    this.hero = new Hero({ position: 0, boomerang: new Boomerang() }); // Герою можно аргументом передать бумеранг.
+    this.hero = new Hero({ position: 0, boomerang: new Boomerang() });
     this.enemy = new Enemy({ position: 20 });
     this.view = new View();
     this.track = [];
     this.regenerateTrack();
+    this.enemy.moveLeft();
   }
 
   regenerateTrack() {
@@ -26,12 +27,11 @@ class Game {
     this.track = (new Array(this.trackLength)).fill('  ');
     this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
     this.track[this.hero.position] = this.hero.skin;
-    this.enemy.moveLeft();
     this.track[this.enemy.position] = this.enemy.skin;
   }
 
   check() {
-    if (this.enemy.skin === '💀') { // && this.hero.boomerang.position === this.hero.position
+    if (this.enemy.skin === '💀' && this.hero.boomerang.position === this.hero.position) {
       console.log('YOU WIN!');
       process.exit();
     }
@@ -49,7 +49,7 @@ class Game {
       this.regenerateTrack();
       this.view.render(this.track);
       this.check();
-    }, 100);
+    }, 10);
   }
 }
 

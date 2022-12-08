@@ -4,6 +4,7 @@ class Enemy {
   constructor(args) {
     this.generateSkin();
     this.position = args.position || 10;
+    this.isDead = false;
   }
 
   generateSkin() {
@@ -13,12 +14,16 @@ class Enemy {
 
   moveLeft() {
     // Идём влево.
-    this.position -= 1;
+    const myTimer = setInterval(() => {
+      if (this.position === 0 || this.isDead === true) clearInterval(myTimer);
+      this.position -= 1;
+    }, 100);
   }
 
   die() {
     // this.position = -1;
     this.skin = '💀';
+    this.isDead = true;
   }
 }
 

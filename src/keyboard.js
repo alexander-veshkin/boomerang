@@ -10,7 +10,7 @@ const keypress = require('keypress');
 const keyboard = {
   // w: (game) => console.log('w'),
   a: (game) => game.hero.moveLeft(),
-  s: (game) => game.hero.attack(),
+  s: (game) => game.hero.attack(game),
   d: (game) => game.hero.moveRight(),
 };
 
