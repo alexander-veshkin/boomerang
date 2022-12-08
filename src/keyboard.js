@@ -8,7 +8,8 @@ const keypress = require('keypress');
 // Настроим соответствия нажатий на клавиши и действий в игре.
 
 const keyboard = {
-  // w: (game) => console.log('w'),
+  w: (game) => game.hero.moveUp(),
+  s: (game) => game.hero.moveDown(),
   a: (game) => game.hero.moveLeft(),
   d: (game) => game.hero.moveRight(),
   space: (game) => game.hero.attack(game),

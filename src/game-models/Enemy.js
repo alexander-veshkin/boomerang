@@ -1,7 +1,8 @@
 class Enemy {
   constructor(args) {
     this.generateSkin();
-    this.position = args.position || 10;
+    this.positionX = 20;
+    this.positionY = 0;
   }
 
   generateSkin() {
@@ -11,13 +12,13 @@ class Enemy {
 
   moveLeft() {
     const myTimer = setInterval(() => {
-      if (this.position === 0 || this.isDead === true) clearInterval(myTimer);
-      this.position -= 1;
+      if (this.positionX === 0) clearInterval(myTimer); // || this.isDead === true
+      this.positionX -= 1;
     }, 200);
   }
 
   die() {
-    this.position += 5;
+    this.positionX += 7;
     this.generateSkin();
   }
 }

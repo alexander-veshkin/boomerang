@@ -5,29 +5,32 @@
 class Boomerang {
   constructor() {
     this.skin = '🌀';
-    this.position = 0;
+    this.positionX = 0;
+    this.positionY = 0;
     this.range = 5;
   }
 
   fly(game) {
-    this.startPosition = this.position;
+    this.startPosition = this.positionX;
     this.killable = true;
     let direction = 'right';
 
     const myTimer = setInterval(() => {
-      if (this.position === this.startPosition + 5 || this.position === game.enemy.position) {
+      if (this.positionX === this.startPosition + 5
+      || (this.positionX === game.enemy.positionX && this.positionY === game.enemy.positionY)) {
         direction = 'left';
       }
 
-      if (this.startPosition <= this.position && direction === 'right') {
+      if (this.startPosition <= this.positionX && direction === 'right') {
         this.moveRight();
       }
 
-      if (this.startPosition < this.position && direction === 'left') {
+      if (this.startPosition < this.positionX && direction === 'left') {
         this.moveLeft();
       }
 
-      if (this.position === this.startPosition || this.position === game.hero.position) {
+      if (this.positionX === this.startPosition
+      || (this.positionX === game.hero.positionX && this.positionY === game.hero.positionY)) {
         this.killable = false;
         clearInterval(myTimer);
       }
@@ -35,11 +38,11 @@ class Boomerang {
   }
 
   moveRight() {
-    this.position += 1;
+    this.positionX += 1;
   }
 
   moveLeft() {
-    this.position -= 1;
+    this.positionX -= 1;
   }
 }
 

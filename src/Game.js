@@ -11,30 +11,33 @@ const View = require('./View');
 // Тут будут все настройки, проверки, запуск.
 
 class Game {
-  constructor({ trackLength }) {
-    this.trackLength = trackLength;
+  constructor() {
+    this.trackLength = 30;
     this.hero = new Hero({ position: 0, boomerang: new Boomerang() });
-    this.enemy = new Enemy({ position: 20 });
+    this.enemy = new Enemy();
     this.view = new View();
-    this.track = [];
+    this.tracks = [[], [], [], [], []];
     this.regenerateTrack();
-    this.enemy.moveLeft();
+    // this.enemy.moveLeft();
   }
 
   regenerateTrack() {
     // Сборка всего необходимого (герой, враг(и), оружие)
     // в единую структуру данных
-    this.track = (new Array(this.trackLength)).fill('  ');
-    this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
-    this.track[this.hero.position] = this.hero.skin;
-    this.track[this.enemy.position] = this.enemy.skin;
+    this.tracks = this.tracks.map(() => new Array(this.trackLength).fill('  '));
+    this.tracks[this.hero.boomerang.positionY][this.hero.boomerang.positionX] = this.hero.boomerang.skin;
+    this.tracks[this.hero.positionY][this.hero.positionX] = this.hero.skin;
+    this.tracks[this.enemy.positionY][this.enemy.positionX] = this.enemy.skin;
   }
 
   check() {
-    if (this.hero.position === this.enemy.position) {
+    if (this.hero.positionX === this.enemy.positionX
+    && this.hero.positionY === this.enemy.positionY) {
       this.hero.die();
     }
-    if (this.hero.boomerang.position === this.enemy.position && this.hero.boomerang.killable) {
+    if (this.hero.boomerang.positionX === this.enemy.positionX
+    && this.hero.boomerang.positionY === this.enemy.positionY
+    && this.hero.boomerang.killable) {
       this.enemy.die();
       this.hero.score += 1;
     }
@@ -44,7 +47,7 @@ class Game {
     setInterval(() => {
       // Let's play!
       this.regenerateTrack();
-      this.view.render(this.track);
+      this.view.render(this.tracks);
       this.check();
     }, 10);
   }
