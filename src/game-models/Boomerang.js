@@ -26,19 +26,17 @@ class Boomerang {
         this.moveLeft();
       }
 
-      if (this.position === this.startPosition) {
+      if (this.position === this.startPosition || this.position === game.hero.position) {
         clearInterval(myTimer);
       }
     }, 50);
   }
 
   moveRight() {
-    // Идём вправо.
     this.position += 1;
   }
 
   moveLeft() {
-    // Идём влево.
     this.position -= 1;
   }
 }

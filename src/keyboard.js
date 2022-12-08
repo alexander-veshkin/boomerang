@@ -10,8 +10,8 @@ const keypress = require('keypress');
 const keyboard = {
   // w: (game) => console.log('w'),
   a: (game) => game.hero.moveLeft(),
-  s: (game) => game.hero.attack(game),
   d: (game) => game.hero.moveRight(),
+  space: (game) => game.hero.attack(game),
 };
 
 // Какая-то функция.
@@ -32,7 +32,5 @@ function runInteractiveConsole(game) {
   });
   process.stdin.setRawMode(true);
 }
-
-// Давай попробуем запустить этот скрипт!
 
 module.exports = runInteractiveConsole;

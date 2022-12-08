@@ -5,6 +5,7 @@ class Hero {
     this.skin = '🤠'; // можете использовать любые emoji '💃'
     this.position = args.position || 0;
     this.boomerang = args.boomerang;
+    this.score = 0;
   }
 
   moveLeft() {
@@ -22,12 +23,13 @@ class Hero {
 
   attack(game) {
     // Атакуем.
-    this.boomerang.fly(game);
+    if (this.position === this.boomerang.position) this.boomerang.fly(game);
   }
 
   die() {
     this.skin = '💀';
     console.log('YOU ARE DEAD!💀');
+    console.log(`YOUR SCORE IS ${this.score}`);
     process.exit();
   }
 }

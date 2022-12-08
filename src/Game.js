@@ -31,15 +31,16 @@ class Game {
   }
 
   check() {
-    if (this.enemy.skin === '💀' && this.hero.boomerang.position === this.hero.position) {
-      console.log('YOU WIN!');
-      process.exit();
-    }
+    // if (this.enemy.skin === '💀' && this.hero.boomerang.position === this.hero.position) {
+    //   console.log('YOU WIN!');
+    //   process.exit();
+    // }
     if (this.hero.position === this.enemy.position) {
       this.hero.die();
     }
     if (this.hero.boomerang.position === this.enemy.position) {
       this.enemy.die();
+      this.hero.score += 1;
     }
   }
 
