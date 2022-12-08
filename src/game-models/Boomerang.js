@@ -15,7 +15,6 @@ class Boomerang {
     this.killable = true;
     let direction = 'right';
 
-    
     const myTimer = setInterval(() => {
       game.enemies.sort((a, b) => a.positionX - b.positionX);
       const enemyInLine = game.enemies.find((enemy) => enemy.positionY === this.positionY

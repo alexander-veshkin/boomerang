@@ -12,8 +12,7 @@ class Enemy {
 
   moveLeft(game) {
     const myTimer = setInterval(() => {
-      if (this.positionX === 0) clearInterval(myTimer); // || this.isDead === true
-      // if (game.hero.boomerang.positionX === this.positionX) this.die(game);
+      if (this.positionX === 0) clearInterval(myTimer);
       this.positionX -= 1;
     }, 200);
   }
