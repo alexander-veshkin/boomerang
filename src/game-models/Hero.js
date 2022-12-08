@@ -43,7 +43,6 @@ class Hero {
   die() {
     this.skin = '💀';
     console.log('YOU ARE DEAD!💀');
-    console.log(`YOUR SCORE IS ${this.score}`);
     process.exit();
   }
 }

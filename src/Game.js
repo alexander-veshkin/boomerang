@@ -14,11 +14,22 @@ class Game {
   constructor() {
     this.trackLength = 30;
     this.hero = new Hero({ position: 0, boomerang: new Boomerang() });
-    this.enemy = new Enemy();
+    this.enemies = [new Enemy()];
     this.view = new View();
     this.tracks = [[], [], [], [], []];
     this.regenerateTrack();
-    // this.enemy.moveLeft();
+    this.enemies[0].moveLeft(this);
+    this.generateEnemies();
+  }
+
+  generateEnemies() {
+    setInterval(() => {
+      const randomX = Math.floor(Math.random() * 10 + 20);
+      const randomY = Math.floor(Math.random() * 5);
+      const newEnemy = new Enemy({ positionX: randomX, positionY: randomY });
+      this.enemies.push(newEnemy);
+      newEnemy.moveLeft(this);
+    }, 2000);
   }
 
   regenerateTrack() {
@@ -27,19 +38,18 @@ class Game {
     this.tracks = this.tracks.map(() => new Array(this.trackLength).fill('  '));
     this.tracks[this.hero.boomerang.positionY][this.hero.boomerang.positionX] = this.hero.boomerang.skin;
     this.tracks[this.hero.positionY][this.hero.positionX] = this.hero.skin;
-    this.tracks[this.enemy.positionY][this.enemy.positionX] = this.enemy.skin;
+    this.enemies.forEach((enemy) => {
+      this.tracks[enemy.positionY][enemy.positionX] = enemy.skin;
+    });
   }
 
   check() {
-    if (this.hero.positionX === this.enemy.positionX
-    && this.hero.positionY === this.enemy.positionY) {
+    const deadlyEnemy = this.enemies.find((enemy) => (this.hero.positionX === enemy.positionX
+    && this.hero.positionY === enemy.positionY)
+    || enemy.positionX === 0);
+
+    if (deadlyEnemy) {
       this.hero.die();
-    }
-    if (this.hero.boomerang.positionX === this.enemy.positionX
-    && this.hero.boomerang.positionY === this.enemy.positionY
-    && this.hero.boomerang.killable) {
-      this.enemy.die();
-      this.hero.score += 1;
     }
   }
 
@@ -47,7 +57,7 @@ class Game {
     setInterval(() => {
       // Let's play!
       this.regenerateTrack();
-      this.view.render(this.tracks);
+      this.view.render(this);
       this.check();
     }, 10);
   }

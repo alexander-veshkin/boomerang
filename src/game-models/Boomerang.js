@@ -15,9 +15,28 @@ class Boomerang {
     this.killable = true;
     let direction = 'right';
 
+    
     const myTimer = setInterval(() => {
-      if (this.positionX === this.startPosition + 5
-      || (this.positionX === game.enemy.positionX && this.positionY === game.enemy.positionY)) {
+      game.enemies.sort((a, b) => a.positionX - b.positionX);
+      const enemyInLine = game.enemies.find((enemy) => enemy.positionY === this.positionY
+      && enemy.positionX >= this.positionX);
+
+      if (this.positionX === this.startPosition + 5) {
+        direction = 'left';
+      }
+
+      if (enemyInLine
+      && this.positionX === enemyInLine.positionX
+      && this.killable) {
+        enemyInLine.die(game);
+        direction = 'left';
+      }
+
+      if (enemyInLine
+      && this.positionX === enemyInLine.positionX - 1
+      && this.killable) {
+        this.moveRight();
+        enemyInLine.die(game);
         direction = 'left';
       }
 
