@@ -1,3 +1,5 @@
+const { Score } = require('../../db/models');
+
 class Hero {
   constructor(args) {
     this.skin = '🤠';
@@ -5,6 +7,22 @@ class Hero {
     this.positionY = 0;
     this.boomerang = args.boomerang;
     this.score = 0;
+    this.time = 0;
+    this.startTime = new Date().getTime();
+  }
+
+  updateTime() {
+    this.time = new Date().getTime() - this.startTime;
+  }
+
+  formatTime(time) {
+    let sec = Math.floor(time / 1000);
+    let min = Math.floor(sec / 60);
+    let h = Math.floor(min / 24);
+    sec %= 60;
+    min %= 60;
+    h %= 24;
+    return `${h}:${min}:${sec}`;
   }
 
   moveLeft() {
@@ -40,9 +58,11 @@ class Hero {
     && this.positionY === this.boomerang.positionY;
   }
 
-  die() {
+  async die() {
     this.skin = '💀';
     console.log('YOU ARE DEAD!💀');
+    const gameTime = this.formatTime(this.time);
+    await Score.create({ user_id: this.id, score: this.score, time: gameTime });
     process.exit();
   }
 }

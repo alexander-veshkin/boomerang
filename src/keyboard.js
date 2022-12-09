@@ -2,7 +2,10 @@
 // Вместо keypress можно использовать и стандартный readline.
 // Главное не используй всё вместе!
 
-const keypress = require('keypress');
+const readline = require('readline');
+const { User } = require('../db/models');
+
+const rl = readline.createInterface(process.stdin, process.stdout);
 
 // Управление.
 // Настроим соответствия нажатий на клавиши и действий в игре.
@@ -18,20 +21,27 @@ const keyboard = {
 // Какая-то функция.
 
 function runInteractiveConsole(game) {
-  keypress(process.stdin);
   process.stdin.on('keypress', (ch, key) => {
-    if (key) {
-      // Вызывает команду, соответствующую нажатой кнопке.
-      if (key.name in keyboard) {
-        keyboard[key.name](game);
-      }
-      // Прерывание программы.
-      if (key.ctrl && key.name === 'c') {
-        process.exit();
-      }
+    // Вызывает команду, соответствующую нажатой кнопке.
+    if (key.name in keyboard) {
+      keyboard[key.name](game);
+    }
+    // Прерывание программы.
+    if (key.ctrl && key.name === 'c') {
+      process.exit();
     }
   });
   process.stdin.setRawMode(true);
 }
 
-module.exports = runInteractiveConsole;
+function registration() {
+  return new Promise((res, rej) => {
+    rl.on('line', async (input) => {
+      await User.findOrCreate({ where: { nickname: `${input}` } });
+      const nick = await User.findOne({ where: { nickname: `${input}` } });
+      res(nick);
+    });
+  });
+}
+
+module.exports = { runInteractiveConsole, registration };

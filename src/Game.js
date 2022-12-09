@@ -53,11 +53,13 @@ class Game {
     }
   }
 
-  play() {
+  play(nick) {
+    this.hero.id = nick.id;
     setInterval(() => {
       // Let's play!
       this.regenerateTrack();
       this.view.render(this);
+      this.hero.updateTime();
       this.check();
     }, 10);
   }

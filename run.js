@@ -1,11 +1,18 @@
 // Основной файл.
 // Запускает игру.
 const Game = require('./src/Game');
-const runInteractiveConsole = require('./src/keyboard');
+const { runInteractiveConsole, registration } = require('./src/keyboard');
 
 // Инициализация игры с настройками.
 const game = new Game();
 
 // Запуск игры.
-runInteractiveConsole(game);
-game.play();
+
+async function run() {
+  console.log('Enter your nickname:');
+  const nick = await registration();
+  runInteractiveConsole(game);
+  game.play(nick);
+}
+
+run();

@@ -2,8 +2,6 @@
 
 class View {
   render(game) {
-    const yourTeamName = 'Elbrus';
-
     // Тут всё рисуем.
     console.clear();
     game.tracks.forEach((track) => {
@@ -11,6 +9,7 @@ class View {
     });
     console.log('\n\n');
     console.log(`Enemies killed: ${game.hero.score}`);
+    console.log(`Time: ${game.hero.formatTime(game.hero.time)}`);
   }
 }
 
