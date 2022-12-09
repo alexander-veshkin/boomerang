@@ -10,7 +10,9 @@ class View {
     game.tracks.forEach((track) => {
       log(chalk.white.bgGreenBright.bold(' 🏡 ' + track.join('') + ' ⛰ '));
     });
+
     log('\n');
+    log(`Level: ${game.level}`);
     log(chalk.white.bgMagentaBright.bold(`  Enemies killed: ${game.hero.score}   `));
     log(chalk.green(`  Time: ${game.hero.formatTime(game.hero.time)}   `));
   }

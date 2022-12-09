@@ -17,19 +17,29 @@ class Game {
     this.enemies = [new Enemy()];
     this.view = new View();
     this.tracks = [[], [], [], [], []];
+    this.level = 1;
     this.regenerateTrack();
-    this.enemies[0].moveLeft(this);
-    this.generateEnemies();
+    // this.enemies[0].moveLeft(this);
+    // this.generateEnemies();
+  }
+
+  levelUp() {
+    if (this.hero.score >= this.level * 10) {
+      this.level += 1;
+      const stop = true;
+      clearInterval(this.generetaEnemiesInterval);
+      this.generateEnemies();
+    }
   }
 
   generateEnemies() {
-    setInterval(() => {
+    this.generetaEnemiesInterval = setInterval(() => {
       const randomX = Math.floor(Math.random() * 10 + 20);
       const randomY = Math.floor(Math.random() * 5);
       const newEnemy = new Enemy({ positionX: randomX, positionY: randomY });
       this.enemies.push(newEnemy);
       newEnemy.moveLeft(this);
-    }, 2000);
+    }, 2100 - this.level * 100);
   }
 
   regenerateTrack() {
@@ -55,11 +65,15 @@ class Game {
 
   play(nick) {
     this.hero.id = nick.id;
-    setInterval(() => {
+    this.enemies[0].moveLeft(this);
+    this.generateEnemies();
+    const myTimer = setInterval(() => {
       // Let's play!
+      if (this.hero.dead) clearInterval(myTimer);
       this.regenerateTrack();
       this.view.render(this);
       this.hero.updateTime();
+      this.levelUp();
       this.check();
     }, 10);
   }

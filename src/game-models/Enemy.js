@@ -14,7 +14,7 @@ class Enemy {
     const myTimer = setInterval(() => {
       if (this.positionX === 0) clearInterval(myTimer);
       this.positionX -= 1;
-    }, 200);
+    }, 220 - game.level * 20);
   }
 
   die(game) {
