@@ -1,26 +1,24 @@
+// Враг.
+
 class Enemy {
-  constructor(args = {}) {
+  constructor() {
     this.generateSkin();
-    this.positionX = args.positionX || 20;
-    this.positionY = args.positionY || 0;
+    this.position = 2;
   }
 
   generateSkin() {
-    const skins = ['👾', '👹', '👻', '👽', '👿', '💩', '🤡', '🤺', '🧛', '🧟', '🎃'];
+    const skins = ['👾', '💀', '👹', '👻', '👽', '👿', '💩', '🤡', '🤺', '🧛', '🧟', '🎃'];
     this.skin = skins[Math.floor(Math.random() * skins.length)];
   }
 
-  moveLeft(game) {
-    const myTimer = setInterval(() => {
-      if (this.positionX === 0) clearInterval(myTimer);
-      this.positionX -= 1;
-    }, 200);
+  moveLeft() {
+    // Идём влево.
+    this.position -= 1;
   }
 
-  die(game) {
-    const enemyToDie = game.enemies.indexOf(this);
-    game.enemies.splice(enemyToDie, 1);
-    game.hero.score += 1;
+  die() {
+    this.position = '?';
+    console.log('Enemy is dead!');
   }
 }
 
