@@ -8,7 +8,7 @@ class View {
     const log = console.log;
     console.clear();
     game.tracks.forEach((track) => {
-      log(chalk.white.bgMagentaBright.bold(' 🏡 ' + track.join('🌲') + ' ⛰ '));
+      log(chalk.white.bgGreenBright.bold(' 🏡 ' + track.join('') + ' ⛰ '));
     });
     log('\n');
     log(chalk.white.bgMagentaBright.bold(`  Enemies killed: ${game.hero.score}   `));
