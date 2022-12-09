@@ -4,10 +4,10 @@
 
 class Boomerang {
   constructor() {
-    this.skin = '🌀';
+    this.skin = '🪃';
     this.positionX = 0;
     this.positionY = 0;
-    this.range = 5;
+    this.range = 8;
   }
 
   fly(game) {
@@ -17,23 +17,30 @@ class Boomerang {
 
     const myTimer = setInterval(() => {
       game.enemies.sort((a, b) => a.positionX - b.positionX);
-      const enemyInLine = game.enemies.find((enemy) => enemy.positionY === this.positionY
-      && enemy.positionX >= this.positionX);
+      const enemyInLine = game.enemies.find(
+        (enemy) =>
+          enemy.positionY === this.positionY &&
+          enemy.positionX >= this.positionX
+      );
 
       if (this.positionX === this.startPosition + 5) {
         direction = 'left';
       }
 
-      if (enemyInLine
-      && this.positionX === enemyInLine.positionX
-      && this.killable) {
+      if (
+        enemyInLine &&
+        this.positionX === enemyInLine.positionX &&
+        this.killable
+      ) {
         enemyInLine.die(game);
         direction = 'left';
       }
 
-      if (enemyInLine
-      && this.positionX === enemyInLine.positionX - 1
-      && this.killable) {
+      if (
+        enemyInLine &&
+        this.positionX === enemyInLine.positionX - 1 &&
+        this.killable
+      ) {
         this.moveRight();
         enemyInLine.die(game);
         direction = 'left';
@@ -47,8 +54,11 @@ class Boomerang {
         this.moveLeft();
       }
 
-      if (this.positionX === this.startPosition
-      || (this.positionX === game.hero.positionX && this.positionY === game.hero.positionY)) {
+      if (
+        this.positionX === this.startPosition ||
+        (this.positionX === game.hero.positionX &&
+          this.positionY === game.hero.positionY)
+      ) {
         this.killable = false;
         clearInterval(myTimer);
       }

@@ -1,4 +1,5 @@
 const { Score } = require('../../db/models');
+const chalk = require('chalk');
 
 class Hero {
   constructor(args) {
@@ -60,7 +61,7 @@ class Hero {
 
   async die() {
     this.skin = '💀';
-    console.log('YOU ARE DEAD!💀');
+    console.log(chalk.red.bold(`  💀YOU ARE DEAD💀\n   `));
     const gameTime = this.formatTime(this.time);
     await Score.create({ user_id: this.id, score: this.score, time: gameTime });
     process.exit();
