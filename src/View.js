@@ -8,6 +8,7 @@ class View {
       console.log(track.join(''));
     });
     console.log('\n\n');
+    console.log(`Level: ${game.level}`);
     console.log(`Enemies killed: ${game.hero.score}`);
     console.log(`Time: ${game.hero.formatTime(game.hero.time)}`);
   }
