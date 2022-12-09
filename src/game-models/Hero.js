@@ -1,3 +1,4 @@
+const player = require('node-wav-player');
 const { Score } = require('../../db/models');
 const chalk = require('chalk');
 
@@ -61,6 +62,9 @@ class Hero {
   }
 
   async die(game) {
+    player.play({
+      path: './src/sounds/hero_death.wav',
+    });
     this.skin = '💀';
     this.dead = true;
     console.log(chalk.red.bold(`   💀YOU ARE DEAD💀\n   `));

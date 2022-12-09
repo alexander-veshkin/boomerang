@@ -1,3 +1,5 @@
+const player = require('node-wav-player');
+
 class Enemy {
   constructor(args = {}) {
     this.generateSkin();
@@ -18,6 +20,9 @@ class Enemy {
   }
 
   die(game) {
+    player.play({
+      path: './src/sounds/enemy_death.wav',
+    });
     const enemyToDie = game.enemies.indexOf(this);
     game.enemies.splice(enemyToDie, 1);
     game.hero.score += 1;
