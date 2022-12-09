@@ -2,39 +2,46 @@
 // Вместо keypress можно использовать и стандартный readline.
 // Главное не используй всё вместе!
 
-const keypress = require('keypress');
+const readline = require('readline');
+const { User } = require('../db/models');
+
+const rl = readline.createInterface(process.stdin, process.stdout);
 
 // Управление.
 // Настроим соответствия нажатий на клавиши и действий в игре.
 
 const keyboard = {
-  q: () => console.log('q'),
-  w: () => console.log('w'),
-  e: () => console.log('e'),
-  r: () => console.log('r'),
-  t: () => console.log('t'),
-  y: () => console.log('y'),
+  w: (game) => game.hero.moveUp(),
+  s: (game) => game.hero.moveDown(),
+  a: (game) => game.hero.moveLeft(),
+  d: (game) => game.hero.moveRight(),
+  space: (game) => game.hero.attack(game),
 };
 
 // Какая-то функция.
 
-function runInteractiveConsole() {
-  keypress(process.stdin);
+function runInteractiveConsole(game) {
   process.stdin.on('keypress', (ch, key) => {
-    if (key) {
-      // Вызывает команду, соответствующую нажатой кнопке.
-      if (key.name in keyboard) {
-        keyboard[key.name]();
-      }
-      // Прерывание программы.
-      if (key.ctrl && key.name === 'c') {
-        process.exit();
-      }
+    // Вызывает команду, соответствующую нажатой кнопке.
+    if (key.name in keyboard) {
+      keyboard[key.name](game);
+    }
+    // Прерывание программы.
+    if (key.ctrl && key.name === 'c') {
+      process.exit();
     }
   });
   process.stdin.setRawMode(true);
 }
 
-// Давай попробуем запустить этот скрипт!
+function registration() {
+  return new Promise((res, rej) => {
+    rl.on('line', async (input) => {
+      await User.findOrCreate({ where: { nickname: `${input}` } });
+      const nick = await User.findOne({ where: { nickname: `${input}` } });
+      res(nick);
+    });
+  });
+}
 
-runInteractiveConsole();
+module.exports = { runInteractiveConsole, registration };
