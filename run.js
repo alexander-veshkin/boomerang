@@ -2,6 +2,7 @@
 // Запускает игру.
 const Game = require('./src/Game');
 const { runInteractiveConsole, registration } = require('./src/keyboard');
+const chalk = require('chalk');
 
 // Инициализация игры с настройками.
 const game = new Game();
@@ -9,7 +10,7 @@ const game = new Game();
 // Запуск игры.
 
 async function run() {
-  console.log('Enter your nickname:');
+  console.log(chalk.white.bgMagentaBright.bold('Enter your nickname:'));
   const nick = await registration();
   game.view.render(game);
   setTimeout(() => {
