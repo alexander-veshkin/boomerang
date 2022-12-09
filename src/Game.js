@@ -19,8 +19,8 @@ class Game {
     this.tracks = [[], [], [], [], []];
     this.level = 1;
     this.regenerateTrack();
-    this.enemies[0].moveLeft(this);
-    this.generateEnemies();
+    // this.enemies[0].moveLeft(this);
+    // this.generateEnemies();
   }
 
   levelUp() {
@@ -65,8 +65,11 @@ class Game {
 
   play(nick) {
     this.hero.id = nick.id;
-    setInterval(() => {
+    this.enemies[0].moveLeft(this);
+    this.generateEnemies();
+    const myTimer = setInterval(() => {
       // Let's play!
+      if (this.hero.dead) clearInterval(myTimer);
       this.regenerateTrack();
       this.view.render(this);
       this.hero.updateTime();

@@ -11,8 +11,11 @@ const game = new Game();
 async function run() {
   console.log('Enter your nickname:');
   const nick = await registration();
-  runInteractiveConsole(game);
-  game.play(nick);
+  game.view.render(game);
+  setTimeout(() => {
+    runInteractiveConsole(game);
+    game.play(nick);
+  }, 1000);
 }
 
 run();
