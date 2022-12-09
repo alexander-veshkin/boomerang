@@ -1,12 +1,19 @@
 // Основной файл.
 // Запускает игру.
 const Game = require('./src/Game');
+const { runInteractiveConsole, registration } = require('./src/keyboard');
+const chalk = require('chalk');
 
 // Инициализация игры с настройками.
-const game = new Game({
-  trackLength: 30,
-});
-
+const game = new Game();
 
 // Запуск игры.
-game.play();
+
+async function run() {
+  console.log(chalk.white.bgMagentaBright.bold('Enter your nickname:'));
+  const nick = await registration();
+  runInteractiveConsole(game);
+  game.play(nick);
+}
+
+run();
