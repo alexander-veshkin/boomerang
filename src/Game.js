@@ -19,8 +19,6 @@ class Game {
     this.tracks = [[], [], [], [], []];
     this.level = 1;
     this.regenerateTrack();
-    // this.enemies[0].moveLeft(this);
-    // this.generateEnemies();
   }
 
   levelUp() {
@@ -39,7 +37,7 @@ class Game {
       const newEnemy = new Enemy({ positionX: randomX, positionY: randomY });
       this.enemies.push(newEnemy);
       newEnemy.moveLeft(this);
-    }, 2100 - this.level * 100);
+    }, 2100 - this.level * 150);
   }
 
   regenerateTrack() {
