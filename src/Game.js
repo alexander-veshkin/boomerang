@@ -59,7 +59,7 @@ class Game {
     || enemy.positionX === 0);
 
     if (deadlyEnemy) {
-      this.hero.die();
+      this.hero.die(this);
     }
   }
 

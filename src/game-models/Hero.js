@@ -60,12 +60,15 @@ class Hero {
     && this.positionY === this.boomerang.positionY;
   }
 
-  async die() {
+  async die(game) {
     this.skin = '💀';
     this.dead = true;
-    console.log(chalk.red.bold(`  💀YOU ARE DEAD💀\n   `));
+    console.log(chalk.red.bold(`   💀YOU ARE DEAD💀\n   `));
     const gameTime = this.formatTime(this.time);
-    await Score.upsert({ user_id: this.id, score: this.score, time: gameTime });
+    try {
+      await Score.upsert({ user_id: this.id, score: this.score, time: gameTime });
+    } catch (error) {}
+    await game.view.renderStats();
     process.exit();
   }
 }
